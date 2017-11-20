@@ -1,0 +1,14 @@
+os_name
+shared_devices
+contact_list
+gender
+looking_for_gender
+age
+search_min_age
+search_max_age
+mobile_prefix
+given_likes
+given_dislikes
+received_likes
+received_dislikes
+
