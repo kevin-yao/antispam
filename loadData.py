@@ -122,11 +122,12 @@ if __name__ == '__main__':
                           LEFT JOIN
                                 swipes USING(user_id)""";
 
-                                
+    query2 = "SELECT count(*) FROM stats.core_users"                        
     header = ['user_id', 'os_name', 'shared_device', 'contact_list', 'gender', 'looking_for_gender', 'age', 'search_min_age',
                 'search_max_age', 'mobile_prefix', 'given_likes', 'given_dislikes', 'received_likes', 'received_dislikes', 'status'];
-    data = db.getSql(query);
-    output_file = '/Users/kangpingyao/Documents/yaokp/antispam/data/users_20170801.txt'
-    output_data(output_file, data, header)
+    data = db.getSql(query2);
+    print data
+    #output_file = '/Users/kangpingyao/Documents/yaokp/antispam/data/users_20170801.txt'
+    #output_data(output_file, data, header)
 
 

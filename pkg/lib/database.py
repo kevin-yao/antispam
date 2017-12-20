@@ -23,14 +23,13 @@ class Database(object):
             result = cur.fetchall()
            
             self.__db_connection.commit()
-            
-            # close the communication with the PostgreSQL
-            cur.close()
-
-
-            
+                        
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
+
+        finally:
+            # close the communication with the PostgreSQL
+            cur.close()
 
         return result
 
@@ -43,12 +42,13 @@ class Database(object):
             cur.execute(sql, (value,))
            
             self.__db_connection.commit()
-
-            # close the communication with the PostgreSQL
-            cur.close()
             
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
+
+        finally:            
+            # close the communication with the PostgreSQL
+            cur.close()
 
     def insertManyRows(self, sql, values):
         try:
@@ -59,11 +59,13 @@ class Database(object):
            
             self.__db_connection.commit()
 
-            # close the communication with the PostgreSQL
-            cur.close()
             
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
+
+        finally:
+            # close the communication with the PostgreSQL
+            cur.close()
 
     def queryFunc(self, func, params = None):
         try:
@@ -75,11 +77,13 @@ class Database(object):
            
             self.__db_connection.commit()
             
-            # close the communication with the PostgreSQL
-            cur.close()
 
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
+
+        finally:
+            # close the communication with the PostgreSQL
+            cur.close()
 
         return result
 
@@ -93,11 +97,13 @@ class Database(object):
            
             self.__db_connection.commit()
             
-            # close the communication with the PostgreSQL
-            cur.close()
 
         except (Exception, psycopg2.DatabaseError) as error:
-            print(error)   
+            print(error) 
+
+        finally:
+            # close the communication with the PostgreSQL
+            cur.close()  
 
         return result
 
