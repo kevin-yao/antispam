@@ -10,6 +10,7 @@ class Database(object):
         try:
             params = Config.config(os.getcwd() + '/pkg/config/config.ini', dbType)
             self.__db_connection = psycopg2.connect(**params)
+            self.__db_connection.autocommit = True
         except (Exception, psycopg2.DatabaseError) as error:
                 print(error)
 
@@ -21,15 +22,14 @@ class Database(object):
             cur.execute(query)
             
             result = cur.fetchall()
-           
-            self.__db_connection.commit()
-                        
-        except (Exception, psycopg2.DatabaseError) as error:
-            print(error)
-
-        finally:
+            
             # close the communication with the PostgreSQL
             cur.close()
+
+
+            
+        except (Exception, psycopg2.DatabaseError) as error:
+            print(error)
 
         return result
 
@@ -41,14 +41,11 @@ class Database(object):
             # execute a statement
             cur.execute(sql, (value,))
            
-            self.__db_connection.commit()
+            # close the communication with the PostgreSQL
+            cur.close()
             
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
-
-        finally:            
-            # close the communication with the PostgreSQL
-            cur.close()
 
     def insertManyRows(self, sql, values):
         try:
@@ -57,15 +54,11 @@ class Database(object):
             # execute a statement
             cur.executemany(sql, values)
            
-            self.__db_connection.commit()
-
+            # close the communication with the PostgreSQL
+            cur.close()
             
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
-
-        finally:
-            # close the communication with the PostgreSQL
-            cur.close()
 
     def queryFunc(self, func, params = None):
         try:
@@ -74,16 +67,12 @@ class Database(object):
             cur.callproc(func, params)
 
             result = cur.fetchall()
-           
-            self.__db_connection.commit()
             
+            # close the communication with the PostgreSQL
+            cur.close()
 
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
-
-        finally:
-            # close the communication with the PostgreSQL
-            cur.close()
 
         return result
 
@@ -94,16 +83,12 @@ class Database(object):
             cur.callproc(func, params)
 
             result = cur.fetchmany(size)
-           
-            self.__db_connection.commit()
             
+            # close the communication with the PostgreSQL
+            cur.close()
 
         except (Exception, psycopg2.DatabaseError) as error:
-            print(error) 
-
-        finally:
-            # close the communication with the PostgreSQL
-            cur.close()  
+            print(error)   
 
         return result
 
@@ -115,3 +100,4 @@ class Database(object):
 if __name__ == '__main__':
     db = Database()
     db.getSql('SELECT * FROM stats.core_users LIMIT 1')
+
